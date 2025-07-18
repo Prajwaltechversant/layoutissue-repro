@@ -1,28 +1,29 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { ScreenProvider } from './srs/context/ScreenContext';
+import ScreenA from './srs/screens/ScreenA';
+import ScreenB from './srs/screens/ScreenB';
+import ScreenC from './srs/screens/ScreenC';
+import ModalScreen from './srs/screens/ModalScreen';
 
-import { NewAppScreen } from '@react-native/new-app-screen';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
+const Stack = createNativeStackNavigator();
 
-function App() {
-  const isDarkMode = useColorScheme() === 'dark';
-
+export default function App() {
   return (
-    <View style={styles.container}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <NewAppScreen templateFileName="App.tsx" />
-    </View>
+    <ScreenProvider>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="ScreenA" component={ScreenA} />
+          <Stack.Screen name="ScreenB" component={ScreenB} />
+          <Stack.Screen name="ScreenC" component={ScreenC} />
+          <Stack.Screen
+            name="ModalScreen"
+            component={ModalScreen}
+            options={{ presentation: 'modal', gestureEnabled: true }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </ScreenProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
-
-export default App;
